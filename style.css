@@ -2,13 +2,24 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  height: 80%;
+  overflow-y: hidden; /* Hide vertical scrollbar */
+  overflow-x: hidden; /* Hide horizontal scrollbar */
 }
+
 
 .survey-container {
   max-width: 600px;
   margin: 50px auto;
   padding: 20px;
   border: 1px solid #ccc;
+}
+
+#myVideo {
+  display: block;
+  margin: auto; /* Set margin to auto to center horizontally */
+  max-width: 100%; /* Set maximum width to ensure the video doesn't exceed viewport width */
+  height: auto; /* Automatically adjust height to maintain aspect ratio */
 }
 
 .form-group {
