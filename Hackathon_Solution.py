@@ -1,3 +1,6 @@
+# This program will take the information from a CSV File and be used to determine the types of products and quantity of products to supply for Chevron College Recruiting events.
+
+# Importing assets to read CSV File
 import csv
 
 # Creating a list to store what type of merch will be needed based on occupation.
@@ -28,7 +31,7 @@ def process_location(loc):
             print ('Chevron: Texas Supplies')
             merch = process_occupation(occupation)
             
-        case 'Virgina(D.C.)':
+        case 'Virginia(D.C.)':
             print ('Chevron: D.C. Supplies')
             merch = process_occupation(occupation)
 
@@ -44,10 +47,10 @@ def process_location(loc):
     merchSupply = [f"{merch[i]}, {supplyItem1 if i == 0 else supplyItem2}" for i in range(len(merch))]
     return merchSupply
 
-# Function that will identify which occupation the user had chosen and help decide what products will be brought.          
+# Function that will identify which occupation the user chooses and help decide what products will be brought.          
 def process_occupation(occ):
 
-    # IF and ELIF statement will decide occuptaion and return the list result to the function.
+    # IF and ELIF statements will decide occupation and return the list result to the function.
     if(occ == 'Student'):
         print('Event Focus: Students')
         return ['USB Drives','T-Shirts']
@@ -60,14 +63,14 @@ def process_occupation(occ):
         return 'Invalid'
         return []
 
-# Function will identify which event type the user had chosen and assign the suggested amount of items need for the event.
+# Function will identify which event type the user had chosen and assign the suggested amount of items needed for the event.
 def process_eventType(evt):
 
-    # Declaring the varibales of the items.
+    # Declaring the variables of the items.
     supplyItem1 = 0
     supplyItem2 = 0
 
-    # MATCH CASE will determine based on event how much merchandise will be needed for the events.
+    # MATCH CASE will determine based on the event how much merchandise will be needed for the events.
     match evt:
         case 'Lobby Day':
             supplyItem1 = 10
@@ -90,7 +93,6 @@ def process_eventType(evt):
             
     return supplyItem1, supplyItem2
 
-# This will call everything within the program, assisgning it to mechandise for the merchant to decide on what to order.
+# This will call everything within the program, assigning it to merchandise for the merchant to decide on what to order.
 merchandise = process_location(location)
 print ("Suggested merch order for the event will be", merchandise)
-
