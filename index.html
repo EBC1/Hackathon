@@ -1,39 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Survey</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Demographic Survey</title>
 </head>
 <body>
+    <h2>Interactive Demographic Survey</h2>
+    <form id="surveyForm">
+        <label for="occupation">Occupation:</label><br>
+        <select id="occupation" name="occupation">
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+            <option value="veteran">Veteran</option>
+            <option value="other">Other (Explain Below)</option>
+        </select><br><br>
 
-<div class="survey-container">
-  <h1>Survey</h1>
-  <form id="survey-form">
-    <div class="form-group">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" required>
-    </div>
+        <div id="eventTypesSection">
+            <label>Event Types:</label><br>
+            <input type="checkbox" id="hackathon" name="eventTypes" value="hackathon">
+            <label for="hackathon">Hackathon</label><br>
+            <input type="checkbox" id="careerFair" name="eventTypes" value="careerFair">
+            <label for="careerFair">Career Fair</label><br>
+            <input type="checkbox" id="lobbyDay" name="eventTypes" value="lobbyDay">
+            <label for="lobbyDay">Lobby Day</label><br><br>
+        </div>
 
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required>
-    </div>
+        <div id="locationSection">
+            <label for="location">Location:</label><br>
+            <input type="checkbox" id="california" name="location" value="california">
+            <label for="california">California</label><br>
+            <input type="checkbox" id="texas" name="location" value="texas">
+            <label for="texas">Texas</label><br>
+            <input type="checkbox" id="virginia" name="location" value="virginia">
+            <label for="virginia">Virginia - DC</label><br>
+            <input type="checkbox" id="northCarolina" name="location" value="northCarolina">
+            <label for="northCarolina">North Carolina - Greensboro</label><br><br>
+        </div>
 
-    <div class="form-group">
-      <label for="age">Age:</label>
-      <input type="number" id="age" name="age" required>
-    </div>
+        <button type="button" onclick="submitSurvey()">Submit</button>
+    </form>
 
-    <div class="form-group">
-      <label for="feedback">Feedback:</label>
-      <textarea id="feedback" name="feedback" rows="4" required></textarea>
-    </div>
+    <script>
+        function submitSurvey() {
+            var occupation = document.getElementById("occupation").value;
+            var eventTypes = [];
+            var eventCheckboxes = document.getElementsByName("eventTypes");
+            for (var i = 0; i < eventCheckboxes.length; i++) {
+                if (eventCheckboxes[i].checked) {
+                    eventTypes.push(eventCheckboxes[i].value);
+                }
+            }
+            var location = [];
+            var locationCheckboxes = document.getElementsByName("location");
+            for (var i = 0; i < locationCheckboxes.length; i++) {
+                if (locationCheckboxes[i].checked) {
+                    location.push(locationCheckboxes[i].value);
+                }
+            }
 
-    <button type="submit">Submit</button>
-  </form>
-</div>
+            var surveyData = {
+                "occupation": occupation,
+                "eventTypes": eventTypes,
+                "location": location
+            };
+
+            var jsonData = JSON.stringify(surveyData);
+
+            var blob = new Blob([`var surveyData = ${jsonData};`], { type: "text/javascript" });
+            var url = URL.createObjectURL(blob);
+
+            var a = document.createElement("a");
+            a.href = url;
+            a.download = "surveyData.js";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            alert("Survey data submitted successfully!");
+        }
+
+        // Dynamically show/hide event types based on occupation selection
+        document.getElementById("occupation").addEventListener("change", function() {
+            var occupation = this.value;
+            var eventTypesSection = document.getElementById("eventTypesSection");
+
+            if (occupation === "student" || occupation === "teacher") {
+                eventTypesSection.style.display = "block";
+            } else {
+                eventTypesSection.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>
+
 
 <script src="script.js"></script>
 </body>
